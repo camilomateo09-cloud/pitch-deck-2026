@@ -1,0 +1,353 @@
+<!--
+  /public/index.html
+  Elastic Design - Pitch 2026
+-->
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description"
+          content="Diseño estratégico aplicado con la eficiencia que exige el producto digital." />
+
+    <title>Elastic Design - Pitch 2026</title>
+
+    <!-- Social preview -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Elastic Design - Criterio senior" />
+    <meta property="og:description" content="La experiencia es lo que permanece." />
+    <meta property="og:url" content="https://feliz2026.3lastic.com/" />
+    <meta property="og:image" content="https://feliz2026.3lastic.com/assets/og-2026.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Elastic Design - Criterio senior" />
+    <meta name="twitter:description" content="La experiencia es lo que permanece." />
+    <meta name="twitter:image" content="https://feliz2026.3lastic.com/assets/og-2026.jpg" />
+
+    <!-- Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Georama:wght@400;600&family=Aleo:wght@400&display=swap" rel="stylesheet" />
+
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+
+    <link rel="stylesheet" href="./styles.css" />
+
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+
+
+  <body>
+    <!-- Background -->
+    <canvas
+      id="bg"
+      class="bg-canvas"
+      aria-hidden="true"
+      role="presentation"
+    ></canvas>
+
+    <!-- Video background (hidden by default) -->
+    <video 
+      id="bg-video" 
+      class="bg-video" 
+      aria-hidden="true" 
+      loop 
+      muted 
+      playsinline
+      autoplay
+      preload="metadata"
+    ></video>
+
+
+
+    <div class="bg-veil" aria-hidden="true"></div>
+
+    <!-- Skip to content -->
+    <a class="skip-link" href="#slides">Saltar al contenido</a>
+
+    <!-- Header (logo, fixed) -->
+    <header class="top">
+      <a class="logo" href="#slide-1" aria-label="Volver al inicio">
+        <img
+          src="./assets/3lastc_logo.svg"
+          alt="Elastic Design"
+          loading="eager"
+        />
+      </a>
+    </header>
+
+    <!-- Stepper (bullets) -->
+    <nav class="stepper js-only" aria-label="Navegación por secciones">
+      <ol class="stepper__list" id="stepperList"></ol>
+    </nav>
+
+    <!-- Slides -->
+    <main class="slides" id="slides" tabindex="-1">
+      <!-- Slide 1 -->
+      <section
+        class="slide slide--hero ds-bg-cover ds-bg-fondoux"
+        id="slide-1"
+        aria-label="Introducción"
+        data-step-label="Intro"
+      >
+        <div class="ds-container">
+          <div class="ds-measure--hero">
+            <div class="ds-stack--hero">
+              <!-- hueco dinámico (si lo quieres visible arriba, dale estilo) -->
+              
+
+              <!-- Elastic = Display 2 -->
+              <h1 id="slide1Title" class="text-display-2">
+                Elastic design studio
+              </h1>
+
+              <!-- Criterio = H2 -->
+              <h2 class="text-h2">
+                La experiencia es lo que permanece
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2 -->
+      <section
+        class="slide ds-slide-pad-reset ds-pad-b-96"
+        id="slide-2"
+        aria-label="Experiencia"
+        data-step-label="Experiencia"
+        data-bg-type="video"
+        data-video-src="./assets/videos/wrong_decision_HD.mp4"
+      >
+        <div class="ds-grid ds-grid--3-left ds-h-full ds-minh-screen">
+          <!-- Col 1 -->
+          <div class="ds-col-bottom ds-pad-x-136">
+            <div class="ds-stack--card">
+              <h3 class="text-title-1 m-0">Hoy, muchas experiencias se olvidan.</h3>
+              <ul class="text-body-1 m-0"><li>Se diseñan con prisa</li> <li>Se fragmentan por partes</li> <li>Se optimizan para el corto plazo</li></ul>
+              <p class="text-body-1 m-0">
+                Y con el tiempo, la marca se diluye.
+              </p>
+              <p id="slide2" class="text-body-1 m-0"></p>
+            </div>
+          </div>
+          <!-- Col 2-3 vacías -->
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- Slide 3 -->
+      <section
+        class="slide ds-slide-pad-reset ds-pad-b-96"
+        id="slide-3"
+        aria-label="Problema"
+        data-step-label="Problema"
+        data-bg-type="video"
+        data-video-src="./assets/videos/bg_problem_hd.mp4"
+      >
+        <div class="ds-grid ds-grid--3-left ds-h-full ds-minh-screen">
+          <!-- Col 1 -->
+          <div class="ds-col-bottom ds-pad-x-136">
+            <div class="ds-stack--card">
+              <h3 class="text-title-1 m-0">El problema no es la falta de diseño.</h3>
+              <p class="text-body-1 m-0">
+                Es cómo se toman las decisiones.
+              </p>
+              <ul class="text-body-1 m-0"><li>Demasiadas decisiones aisladas</li> <li>Sin una visión de conjunto</li> <li>Sin criterio compartido</li></ul>
+              <p class="text-body-1 m-0">
+                Y cuando nadie la piensa de forma integral, la experiencia acaba distorsionándose.
+              </p>
+            </div>
+          </div>
+          <!-- Col 2-3 vacías -->
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+        </div>
+      </section>
+
+
+      <!-- Slide 4 -->
+      <section class="slide ds-slide-pad-reset" id="slide-4" aria-label="Split Image" data-step-label="Split">
+        <div class="ds-split ds-split--2 ds-w-full ds-minh-screen">
+          <!-- Izquierda -->
+          <div class="ds-container ds-vcenter">
+            <h2 class="text-h2">
+              En Elastic diseñamos
+                la experiencia como
+                un todo, para que
+                cada decisión tenga
+                sentido a largo
+                plazo.
+            </h2>
+          </div>
+
+          <!-- Derecha -->
+          <div class="ds-panel-media ds-bg-fondocolumna" role="img" aria-label="Imagen arquitectura"></div>
+        </div>
+      </section>
+      
+      <!-- Slide 5 -->
+      <section class="slide" id="slide-5" aria-label="Momentos" data-step-label="Momentos">
+          <div class="ds-container">
+              <div class="ds-stack ds-stack--dilema">
+                  
+                  <h2 class="text-h2">
+                      Elastic encaja mejor en momentos concretos.
+                  </h2>
+
+                  <ul class="text-body-1 m-0">
+                      <li>Cuando la experiencia ya no refleja lo que la marca promete</li>
+                      <li>Cuando el producto ha crecido y necesita orden</li>
+                      <li>Cuando hay demasiadas decisiones sin una dirección clara</li>
+                      <li>Cuando avanzar rápido empieza a salir caro</li>
+                  </ul>
+                  <p class="text-title-1 m-0">
+                    Cuando decidir bien es más importante que hacer más.
+                  </p>
+              </div>
+          </div>
+      </section>
+
+
+      <!-- Slide 6 -->
+      <section
+        class="slide ds-slide-pad-reset ds-pad-b-96"
+        id="slide-6"
+        aria-label="Hotel"
+        data-step-label="Hotel"
+        data-bg-type="video"
+        data-video-src="./assets/videos/hotel_sanroque_hd.mp4"
+      >
+        <div class="ds-grid ds-grid--3-left ds-h-full ds-minh-screen">
+          <!-- Col 1 -->
+          <div class="ds-col-bottom ds-pad-x-136">
+            <div class="ds-stack--card">
+              <p class="text-body-1 m-0" style="opacity:.75;">CASOS DE ÉXITO</p>
+              <h3 class="text-h2 m-0">Boutique Hotel San Roque</h3>
+              <p class="text-title-1 m-0">Alinear promesa y experiencia</p>
+              <p class="text-body-1 m-0">
+                Repensamos toda la experiencia del huésped para
+                corregir una desalineación creciente entre marca,
+                comunicación y estancia.
+              </p>
+            </div>
+          </div>
+          <!-- Col 2-3 vacías -->
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- Slide 7 -->
+      <section
+        class="slide ds-slide-pad-reset ds-pad-b-96"
+        id="slide-7"
+        aria-label="HashWallet"
+        data-step-label="HashWallet"
+        data-bg-type="video"
+        data-video-src="./assets/videos/HASHWallet_hd2.mp4"
+      >
+        <div class="ds-grid ds-grid--3-left ds-h-full ds-minh-screen">
+          <!-- Col 1 -->
+          <div class="ds-col-bottom ds-pad-x-136">
+            <div class="ds-stack--card">
+              <p class="text-body-1 m-0" style="opacity:.75;">CASOS DE ÉXITO</p>
+              <h3 class="text-h2 m-0">HASHWallet</h3>
+              <p class="text-title-1 m-0">Dar forma a una marca desde su origen</p>
+              <p class="text-body-1 m-0">
+                Acompañamos el nacimiento de HASHWallet definiendo su experiencia,
+                sistema y decisiones clave desde el primer momento.
+              </p>
+            </div>
+          </div>
+          <!-- Col 2-3 vacías -->
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- Slide 8 -->
+      <section
+        class="slide ds-slide-pad-reset ds-pad-b-96"
+        id="slide-8"
+        aria-label="FredOlsen"
+        data-step-label="FredOlsen"
+        data-bg-type="video"
+        data-video-src="./assets/videos/fred_olsen_hd.mp4"
+      >
+        <div class="ds-grid ds-grid--3-left ds-h-full ds-minh-screen">
+          <!-- Col 1 -->
+          <div class="ds-col-bottom ds-pad-x-136">
+            <div class="ds-stack--card">
+              <p class="text-body-1 m-0" style="opacity:.75;">CASOS DE ÉXITO</p>
+              <h3 class="text-h2 m-0">FredOlsen</h3>
+              <p class="text-title-1 m-0">Dar dirección a la experiencia en un entorno complejo</p>
+              <p class="text-body-1 m-0">
+                Aportamos claridad y criterio de diseño en un contexto con múltiples
+                equipos y stakeholders, alineando la experiencia de uso para facilitar
+                decisiones y avanzar con coherencia.
+              </p>
+            </div>
+          </div>
+          <!-- Col 2-3 vacías -->
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- Slide 9 -->
+      <section
+        class="slide ds-bg-cover ds-bg-gooddecision ds-slide-pad-reset ds-pad-bottom-safe"
+        id="slide-9"
+        aria-label="Hablemos"
+        data-step-label="Hablemos"
+      >
+        <div class="ds-grid ds-grid--3-left ds-h-full ds-minh-screen">
+          <!-- Col 1 -->
+          <div class="ds-col-bottom ds-pad-x-136">
+            <div class="ds-stack--card">
+              <p class="text-title-1 m-0">Decidir bien ahora evita problemas después.</p>
+              <p class="text-body-1 m-0" id="slide9">
+                Si este es uno de esos momentos,
+              </p>
+              <a class="ds-btn text-body-1" href="#slide-7">Hablemos</a>
+            </div>
+          </div>
+
+          <!-- Col 2-3 vacías -->
+          <div aria-hidden="true"></div>
+          <div aria-hidden="true"></div>
+        </div>
+      </section>
+
+
+
+
+
+
+
+    </main>
+
+    <!-- Cursor navigator (up/down) -->
+    <div id="cursorNav" class="cursor-nav" aria-hidden="true">
+      <img
+        id="cursorNavIcon"
+        class="cursor-nav__icon"
+        src="./assets/up.svg"
+        alt=""
+      />
+    </div>
+
+    <!-- Scripts -->
+    <script src="./main.js" defer></script>
+    <script type="module" src="./webgl-bg.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,890 @@
+/*
+  /public/styles.css
+  Elastic Design - Pitch Deck 2026
+*/
+/* =========================================================
+   1. ROOT VARIABLES (Design Tokens)
+========================================================= */
+:root{ 
+  --zinc-900: #18181B; 
+  --white: #FFFFFF; 
+  --rose-400: #FF637E; 
+  --green-500: #00C950; 
+  
+  --font: "Aleo", ui-serif, Georgia, serif; 
+  
+  --space-1: 8px; 
+  --space-2: 12px; 
+  --space-3: 16px; 
+  --space-4: 24px; 
+  --space-5: 32px; 
+  --space-6: 48px; 
+  --space-7: 64px; 
+  
+  --gutter: clamp(24px, 5vw, 64px); 
+  --space-stack: clamp(40px, 8vh, 80px); 
+  
+  /* Stepper */ 
+  --stepper-size: 12px; 
+  --stepper-gap: 12px; 
+  --stepper-hit: 28px; 
+}
+
+
+/* Base */
+*{ box-sizing: border-box; }
+html, body{ height: 100%; }
+
+html{
+  /* ✅ quitamos el snap nativo para eliminar el “latigazo” */
+  scroll-snap-type: none;
+
+  /* ✅ evitamos smooth nativo para que no compita con el snap por JS */
+  scroll-behavior: auto;
+
+  scroll-padding-top: 0px;
+}
+
+body{
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--white);
+  font-family: var(--font);
+  overflow-x: hidden;
+}
+
+/* Background */
+.bg-canvas{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+/* Video background (hidden by default) */
+.bg-video{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  object-fit: cover;
+  opacity: 0;             /* estado inicial */
+  pointer-events: none;
+}
+
+/* Cine fades: capas que cambian (fondo y paneles) */
+.bg-canvas,
+.bg-video,
+.ds-panel-media{
+  transition: opacity 1000ms ease-in-out;
+  will-change: opacity;
+  transform: translateZ(0);
+}
+
+/* Fade de contenido por slide (no rompe layout) */
+.slide{
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+.slide.is-active{
+  opacity: 1;
+}
+
+/* Estado base recomendado para paneles de imagen (si quieres fade al entrar) */
+.ds-panel-media{
+  opacity: 0;
+}
+.slide.is-active .ds-panel-media{
+  opacity: 1;
+}
+
+/* Prevent any video UI overlays / play icon on some browsers */
+.bg-video::-webkit-media-controls {
+  display: none !important;
+}
+.bg-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+.bg-video::-webkit-media-controls-play-button {
+  display: none !important;
+}
+
+.bg-veil{
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(80% 60% at 50% 20%, rgba(0,0,0,.10), rgba(0,0,0,.25));
+}
+
+/* Skip link */
+.skip-link{
+  position: absolute;
+  left: var(--space-3);
+  top: var(--space-3);
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.65);
+  color: var(--white);
+  text-decoration: none;
+  transform: translateY(-150%);
+  transition: transform .2s ease;
+  z-index: 10;
+}
+.skip-link:focus{
+  transform: translateY(0);
+  outline: 2px solid rgba(255,255,255,.6);
+  outline-offset: 2px;
+}
+
+/* Header */
+.top{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+.logo{
+  pointer-events: auto;
+  position: fixed;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+}
+.logo img{
+  width: 40px;
+  height: auto;
+  display: block;
+}
+
+/* Slides */
+.slides{
+  position: relative;
+  z-index: 2;
+}
+
+.slide{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-7);
+  padding-inline: 0;
+}
+
+.slide__inner{
+  width: min(980px, 100%);
+}
+
+
+.fine{
+  font-size: 12px;
+  opacity: .65;
+}
+
+
+/* Igualar indent y márgenes de los bullets */
+.why-list {
+  margin: 0;
+}
+.m-0 { margin: 0 !important; }
+
+
+/* --- SYSTEM: TYPOGRAPHY (Aleo & Georama) --- */
+
+/* Display 1 (128px) - Para números gigantes o impactos */
+.text-display-1 {
+  font-family: 'Aleo', serif;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: 3.84px;
+  /* Escala fluida: mín 64px, ideal 10vw, máx 128px */
+  font-size: clamp(64px, 10vw, 128px); 
+}
+
+/* Display 2 (96px) - Héroe principal */
+.text-display-2 {
+  font-family: 'Aleo', serif;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 2.88px;
+  font-size: clamp(48px, 7vw, 96px);
+}
+
+/* H1 (86px) - Títulos de sección grandes */
+.text-h1 {
+  font-family: 'Aleo', serif;
+  font-weight: 500;
+  line-height: 1.18; /* o 118% */
+  letter-spacing: 2.15px;
+  font-size: clamp(40px, 6vw, 86px);
+}
+
+/* H2 (72px) - Subtítulos o frases destacadas */
+.text-h2 {
+  font-family: 'Aleo', serif;
+  font-weight: 400;
+  line-height: 120%;
+  letter-spacing: 1.44px;
+  font-size: clamp(32px, 5vw, 72px);
+}
+
+/* Title 1 (38px) - Introducciones o destacados pequeños */
+.text-title-1 {
+  font-family: 'Aleo', serif;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: 0.57px;
+  font-size: clamp(24px, 3vw, 38px);
+}
+
+/* Body 1 (26px) - Textos de lectura y etiquetas (Georama) */
+.text-body-1 {
+  font-family: 'Georama', sans-serif; /* Asegúrate de importar Georama en el HTML */
+  font-weight: 600;
+  line-height: 146%;
+  letter-spacing: 0.91px;
+  font-size: clamp(18px, 2vw, 26px);
+}
+/* --- DESIGN SYSTEM: LAYOUT --- */
+
+.ds-container {
+  width: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.ds-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+@media (min-width: 820px) {
+  .ds-grid--2-cols {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+  .ds-grid--3-cols {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  /* --- SYSTEM: GRID 3 COLS (left heavy) --- */
+  .ds-grid--3-left {
+    grid-template-columns: 1fr 0.5fr 0.5fr;
+  }
+
+  .ds-grid--split {
+    grid-template-columns: 0.4fr 0.6fr;
+    align-items: center;
+  }
+}
+
+/* --- SYSTEM: STACK (vertical rhythm for text) --- */
+.ds-stack{
+  display: grid;
+  gap: var(--stack-gap, var(--space-4)); /* 24px por defecto */
+}
+
+.ds-stack--tight{
+  --stack-gap: var(--space-3); /* 16px */
+}
+
+.ds-stack--loose{
+  --stack-gap: var(--space-6); /* 48px */
+}
+/* --- SYSTEM: BACKGROUNDS --- */
+.ds-bg-cover{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ds-bg-fondoux{
+  background-image: url("./assets/experience_3lastic.png");
+}
+/* --- SYSTEM: HERO LAYOUT --- */
+
+/* Columna de texto del hero (controla el “280” exterior al centrar) */
+.ds-measure--hero{
+  max-width: 1200px;   /* ajusta si tu Figma pide otro ancho */
+}
+
+/* Stack del hero con gaps exactos por pares */
+.ds-stack--hero{
+  display: grid;
+}
+
+/* Resetea márgenes para que SOLO mande el gap */
+.ds-stack--hero > *{
+  margin: 0;
+}
+
+.ds-stack--hero > * + *{
+  margin-top: 40px;              /* default entre bloques */
+}
+.ds-stack--hero > *:nth-child(2){
+  margin-top: 16px;              /* entre Elastic (1) y Criterio (2) */
+}
+
+/* --- SYSTEM: SECTION PADDING VARIANTS --- */
+.ds-pad-280{
+  padding-inline: 280px;
+}
+.ds-pad-112{
+  padding-block: 112px;
+}
+
+/* --- SYSTEM: STACK (custom gaps by pair) --- */
+/* (si ya tienes ds-stack, esto solo añade una variante concreta) */
+.ds-stack--dilema > *{
+  margin: 0; /* neutraliza márgenes por defecto */
+}
+.ds-stack--dilema > * + *{
+  margin-top: 56px;   /* default: lista -> botón */
+}
+.ds-stack--dilema > *:nth-child(2){
+  margin-top: 64px;   /* título -> lista */
+}
+
+/* --- SYSTEM: BUTTON (inverse outline) --- */
+.ds-btn{
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-4); /* 24px si --space-4=24px; si no, usa 24px fijo */
+  border: 1px solid #fff;
+  color: #fff;
+  text-decoration: none;
+  width: fit-content;
+}
+/* --- SYSTEM: SPLIT (2 columns full-bleed with independent paddings) --- */
+.ds-split{
+  display: grid;
+  width: 100%;
+}
+
+@media (min-width: 820px){
+  .ds-split--2{
+    grid-template-columns: 1fr 1fr;
+    column-gap: 112px;
+    align-items: stretch;
+  }
+}
+
+/* padding por columna */
+.ds-pad-x-136{ padding-inline: 136px; }
+.ds-pad-x-112{ padding-inline: 112px; }
+.ds-pad-y-136{ padding-block: 136px; }
+
+/* --- SYSTEM: VERTICAL CENTER (for a column content) --- */
+.ds-vcenter{
+  display: grid;
+  align-content: center; /* ✅ centra verticalmente dentro de su columna */
+}
+
+/* --- SYSTEM: METRICS --- */
+.ds-metrics{
+  display: grid;
+  justify-items: center;
+}
+
+.ds-metric{
+  display: grid;
+  justify-items: center;
+}
+
+/* reset de márgenes */
+.ds-metric > *{ margin: 0; }
+
+/* ✅ dentro del grupo: número -> descripción = pequeño */
+.ds-metric > * + *{
+  margin-top: 16px; /* pequeño (ajusta a 12/16 si Figma pide otro) */
+}
+
+/* ✅ entre grupos: métrica -> métrica = 72px */
+.ds-metric + .ds-metric{
+  margin-top: 72px;
+}
+/* SYSTEM: MEDIA PANEL (reutilizable) */
+.ds-panel-media{
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+/* --- SYSTEM: Background dim overlay (reutilizable) --- */
+.ds-bg-dim{
+  position: relative;
+  isolation: isolate; /* asegura que el overlay quede dentro */
+}
+
+.ds-bg-dim::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  /* Oscurece como en Figma (ajusta valores si quieres más/menos) */
+  background: radial-gradient(
+      70% 60% at 30% 65%,
+      rgba(0,0,0,.7)
+    );
+}
+
+/* Asegura que el contenido quede por encima */
+.ds-bg-dim > *{
+  position: relative;
+  z-index: 1;
+}
+
+/* --- SYSTEM: Solid backgrounds --- */
+.ds-bg-black{
+  background: #000; /* o var(--zinc-900) si quieres el negro del sistema */
+}
+
+.ds-bg-fondocolumna{
+  background-image: url("./assets/experience.png");
+}
+
+.ds-bg-fondolayer{
+  background-image: url("./assets/fondolayer.png");
+}
+
+.ds-bg-fondohotel{
+  background-image: url("./assets/fondohotel.png");
+}
+
+.ds-bg-fondowallet{
+  background-image: url("./assets/fondowallet.png");
+}
+
+.ds-bg-fondobarco{
+  background-image: url("./assets/fondobarco.png");
+}
+
+.ds-bg-gooddecision{
+  background-image: url("./assets/goood-decision.png");
+}
+
+
+/* --- SYSTEM: GRID GAPS --- */
+.ds-grid--gap-112{ gap: 112px; }
+
+/* --- SYSTEM: COLUMN BOTTOM CONTENT --- */
+.ds-col-bottom{
+  display: grid;
+  align-content: end;   /* ✅ pega el bloque abajo */
+  min-height: 100%;
+}
+
+/* --- SYSTEM: STACK for card text (fixed rhythm) --- */
+.ds-stack--card > *{ margin: 0; }
+.ds-stack--card > * + *{ margin-top: 24px; }  
+
+
+/* =========================================================
+   RESPONSIVE FIXES (mobile-first) — paddings & layouts
+   Pegar en /public/styles.css
+========================================================= */
+
+/* 1) Slide reset: que realmente pueda ocupar toda la altura/ancho */
+.ds-slide-pad-reset{
+  padding: 0;                 /* quita padding legacy del .slide */
+  align-items: stretch;       /* ya lo tenías */
+  justify-content: stretch;   /* ya lo tenías */
+}
+
+/* Helpers reales (sin inline styles) */
+.ds-w-full{ width: 100%; }
+.ds-h-full{ height: 100%; }
+/* Alto correcto en mobile (Safari/Chrome) */
+.ds-minh-screen{
+  min-height: 100vh; /* dynamic viewport height (mejor cuando cambia la barra) */
+}
+
+/* 2) PADDINGS: mobile-first (en móvil NO pueden ser 136/280/1312) */
+.ds-pad-280{ padding-inline: var(--gutter); }
+.ds-pad-112{ padding-block: var(--space-6); } /* 48px en móvil */
+
+.ds-pad-x-136{ padding-inline: var(--gutter); }
+.ds-pad-x-112{ padding-inline: var(--gutter); }
+.ds-pad-y-136{ padding-block: var(--space-6); } /* 48px móvil */
+
+.ds-pad-b-96{ padding-bottom: var(--space-6); } /* 48px móvil */
+
+/* Mobile: si el grid es “3-left” pero solo usas la 1ra columna,
+   oculta los placeholders para que no generen filas/gaps */
+@media (max-width: 819px){
+  .ds-grid--3-left > [aria-hidden="true"]{
+    display: none;
+  }
+}
+/* gaps grandes también deben bajar en móvil */
+.ds-grid--gap-112{ gap: var(--space-6); } /* 48px móvil */
+
+@media (min-width: 820px){
+
+  .ds-pad-x-136{ padding-inline: 136px; }
+  .ds-pad-x-112{ padding-inline: 112px; }
+  .ds-pad-y-136{ padding-block: 136px; }
+
+  .ds-pad-b-96{ padding-bottom: 96px; }
+  .ds-grid--gap-112{ gap: 112px; }
+}
+
+/* 3) Slide 6: padding-right 1312 SOLO en desktop grande.
+   En tablet/móvil debe ser 0 (si no, empuja todo y “sube” el contenido). */
+.ds-pad-r-1312{ padding-right: 0; }
+@media (min-width: 1440px){
+  .ds-pad-r-1312{ padding-right: 1312px; }
+}
+
+/* 5) Requisito explícito: .grid-metrics responsive
+   - Mobile: 1 columna
+   - Desktop (>=820): 2 columnas
+*/
+.grid-metrics{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr;     /* mobile */
+}
+
+@media (min-width: 820px){
+  .grid-metrics{
+    grid-template-columns: 1fr 1fr; /* desktop */
+    column-gap: 112px;
+    align-items: stretch;
+  }
+}
+
+/* Left column: centrado vertical (como pediste) */
+.grid-metrics__left{
+  display: grid;
+  align-content: center;
+}
+
+/* Right column: por defecto centrado; ajusta si quieres “start” en móvil */
+.grid-metrics__right{
+  display: grid;
+  align-content: center;
+}
+
+.ds-pad-bottom-safe{
+  padding-bottom: clamp(24px, 6vh, 96px);
+  padding-bottom: calc(clamp(24px, 6vh, 96px) + env(safe-area-inset-bottom));
+}
+
+
+/* --------------------------------
+   Stepper (right side navigation)
+-------------------------------- */
+
+/* Stepper */
+.stepper{
+  position: fixed;
+  right: var(--space-1);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+
+  /* ✅ para que NO compita con clicks del WebGL */
+  pointer-events: none;
+}
+
+.stepper__list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.stepper__item{
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+}
+
+.stepper__btn{
+  width: 4px;   /* ✅ pedido */
+  height: 4px;  /* ✅ pedido */
+  border-radius: 999px;
+  border: none;
+  background: #ffffff;
+  opacity: 0.5;
+  cursor: default;
+  padding: 0;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.stepper__btn[aria-current="true"]{
+  background: #FF637E; /* ✅ activo */
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce){
+  .stepper__btn{
+    transition: none;
+  }
+}
+
+
+/* Blur in (on demand) */
+.reveal-blur {
+  display: inline-block;
+  filter: blur(14px);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: none;
+  will-change: filter, opacity, transform;
+}
+
+.reveal-blur.is-in {
+  animation: blurIn 900ms cubic-bezier(.2,.9,.2,1) both;
+}
+
+@keyframes blurIn {
+  0%   { filter: blur(14px); opacity: 0; transform: translateY(6px); }
+  60%  { filter: blur(6px);  opacity: 1; transform: translateY(0px); }
+  100% { filter: blur(0px);  opacity: 1; transform: translateY(0px); }
+}
+
+/* Respeta reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-blur,
+  .reveal-blur.is-in {
+    filter: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+
+/* --------------------------------
+   Sky highlight reveal
+-------------------------------- */
+
+.reveal-sky{
+  position: relative;
+  display: inline-block;
+  color: var(--sky-400, #00BCFF);
+  opacity: 0;
+  letter-spacing: -0.02em;
+  transform: translateY(4px);
+}
+
+.reveal-sky::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.1em;
+  width: 100%;
+  height: 0.55em;
+  background: rgba(0, 188, 255, 0.15);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.reveal-sky.is-in{
+  animation: skyIn 700ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.reveal-sky.is-in::after{
+  animation: skyBar 700ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes skyIn{
+  to{
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0;
+  }
+}
+
+@keyframes skyBar{
+  to{
+    transform: scaleX(1);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .reveal-sky,
+  .reveal-sky::after{
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* --------------------------------
+   Focus reveal (human / organic)
+-------------------------------- */
+
+.reveal-focus{
+  display: inline-block;
+  color: var(--green-500, #00C950);
+  filter: blur(6px);
+  opacity: 0.4;
+  transition: none;
+  will-change: filter, opacity;
+}
+
+/* Focus static (no animation, just color emphasis) */
+.reveal-focus--static{
+  filter: none;
+  opacity: 1;
+}
+
+.reveal-focus.is-in{
+  animation: focusIn 900ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes focusIn{
+  0%{
+    filter: blur(6px);
+    opacity: 0.4;
+  }
+  60%{
+    filter: blur(2px);
+    opacity: 1;
+  }
+  100%{
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .reveal-focus,
+  .reveal-focus.is-in{
+    animation: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* --------------------------------
+   Ink underline (brand link)
+-------------------------------- */
+
+.reveal-ink{
+  position: relative;
+  display: inline-block;
+  color: var(--pink-400, #FB64B6);
+  text-decoration: none;
+  opacity: 0;
+
+  /* Force brand link to match signature size */
+  font-size: clamp(18px, 2.7vw, 30px);
+  line-height: 120%;
+  letter-spacing: 0.75px;
+}
+
+.reveal-ink::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.25em;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.reveal-ink.is-in{
+  animation: inkIn 700ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.reveal-ink.is-in::after{
+  animation: inkLine 700ms cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+@keyframes inkIn{
+  to{
+    opacity: 1;
+  }
+}
+
+@keyframes inkLine{
+  to{
+    transform: scaleX(1);
+  }
+}
+
+/* Hover (desktop only, very subtle) */
+@media (hover: hover){
+  .reveal-ink:hover::after{
+    transform: scaleX(1.1);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .reveal-ink,
+  .reveal-ink::after{
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* --------------------------------
+   Cursor navigator (up/down) — Codrops-style
+   (matches HTML: #cursorNav.cursor-nav + #cursorNavIcon.cursor-nav__icon)
+-------------------------------- */
+
+.cursor-nav{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+
+  /* Centrar icono alrededor del punto (x,y) que setea JS */
+  margin-left: -22px;
+  margin-top: -22px;
+
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0;
+
+  /* JS escribe translate3d(x,y,0) */
+  transform: translate3d(-9999px, -9999px, 0);
+  transition: opacity 160ms ease;
+  will-change: transform, opacity;
+}
+
+.cursor-nav.is-visible{
+  opacity: 1;
+}
+
+.cursor-nav__icon{
+  width: 44px;
+  height: 44px;
+  display: block;
+  opacity: 0.95;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
+}
+
+/* En móvil/tablet no hay cursor: lo ocultamos */
+@media (hover: none){
+  .cursor-nav{ display: none; }
+}
+body.cursor-nav-active {
+  cursor: none;
+}
