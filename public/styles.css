@@ -30,92 +30,26 @@
   --stepper-hit: 28px; 
 }
 
+/* =========================================================
+   2. BASE / RESET
+========================================================= */
 
 /* Base */
 *{ box-sizing: border-box; }
 html, body{ height: 100%; }
 
 html{
-  /* ✅ quitamos el snap nativo para eliminar el “latigazo” */
   scroll-snap-type: none;
-
-  /* ✅ evitamos smooth nativo para que no compita con el snap por JS */
   scroll-behavior: auto;
-
   scroll-padding-top: 0px;
 }
 
 body{
   margin: 0;
-  background: var(--color-bg);
+  background: var(--zinc-900);
   color: var(--white);
   font-family: var(--font);
   overflow-x: hidden;
-}
-
-/* Background */
-.bg-canvas{
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-}
-/* Video background (hidden by default) */
-.bg-video{
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0;
-  object-fit: cover;
-  opacity: 0;             /* estado inicial */
-  pointer-events: none;
-}
-
-/* Cine fades: capas que cambian (fondo y paneles) */
-.bg-canvas,
-.bg-video,
-.ds-panel-media{
-  transition: opacity 1000ms ease-in-out;
-  will-change: opacity;
-  transform: translateZ(0);
-}
-
-/* Fade de contenido por slide (no rompe layout) */
-.slide{
-  opacity: 0;
-  transition: opacity 700ms ease;
-}
-.slide.is-active{
-  opacity: 1;
-}
-
-/* Estado base recomendado para paneles de imagen (si quieres fade al entrar) */
-.ds-panel-media{
-  opacity: 0;
-}
-.slide.is-active .ds-panel-media{
-  opacity: 1;
-}
-
-/* Prevent any video UI overlays / play icon on some browsers */
-.bg-video::-webkit-media-controls {
-  display: none !important;
-}
-.bg-video::-webkit-media-controls-start-playback-button {
-  display: none !important;
-}
-.bg-video::-webkit-media-controls-play-button {
-  display: none !important;
-}
-
-.bg-veil{
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(80% 60% at 50% 20%, rgba(0,0,0,.10), rgba(0,0,0,.25));
 }
 
 /* Skip link */
@@ -136,6 +70,52 @@ body{
   transform: translateY(0);
   outline: 2px solid rgba(255,255,255,.6);
   outline-offset: 2px;
+}
+
+/* Helpers */
+.m-0 { margin: 0 !important; }
+
+.why-list {
+  margin: 0;
+}
+
+.fine{
+  font-size: 12px;
+  opacity: .65;
+}
+
+/* =========================================================
+   3. LAYOUT GLOBAL
+========================================================= */
+
+/* Slides layer */
+.slides{
+  position: relative;
+  z-index: 2;
+}
+
+.slide{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--space-7);
+  padding-inline: 0;
+
+  /* fade */
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+.slide.is-active{ opacity: 1; }
+
+/* Hook: media panel visible when slide active */
+.slide.is-active .ds-panel-media{
+  opacity: 1;
+}
+
+.slide__inner{
+  width: min(980px, 100%);
 }
 
 /* Header */
@@ -160,38 +140,58 @@ body{
   display: block;
 }
 
-/* Slides */
-.slides{
-  position: relative;
-  z-index: 2;
+/* Background layers */
+.bg-canvas{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
 }
 
-.slide{
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-block: var(--space-7);
-  padding-inline: 0;
+/* Video background (hidden by default) */
+.bg-video{
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  object-fit: cover;
+  opacity: 0;            
+  pointer-events: none;
 }
 
-.slide__inner{
-  width: min(980px, 100%);
+/* Transitions for cinematic fades */
+.bg-canvas,
+.bg-video,
+.ds-panel-media{
+  transition: opacity 1000ms ease-in-out;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
-
-.fine{
-  font-size: 12px;
-  opacity: .65;
+/* Prevent any video UI overlays / play icon on some browsers */
+.bg-video::-webkit-media-controls {
+  display: none !important;
+}
+.bg-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+}
+.bg-video::-webkit-media-controls-play-button {
+  display: none !important;
 }
 
-
-/* Igualar indent y márgenes de los bullets */
-.why-list {
-  margin: 0;
+.bg-veil{
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(80% 60% at 50% 20%, rgba(0,0,0,.10), rgba(0,0,0,.25));
 }
-.m-0 { margin: 0 !important; }
 
+/* =========================================================
+   4. DESIGN SYSTEM – TYPOGRAPHY
+========================================================= */
 
 /* --- SYSTEM: TYPOGRAPHY (Aleo & Georama) --- */
 
@@ -249,8 +249,12 @@ body{
   letter-spacing: 0.91px;
   font-size: clamp(18px, 2vw, 26px);
 }
-/* --- DESIGN SYSTEM: LAYOUT --- */
 
+/* =========================================================
+   5. DESIGN SYSTEM – LAYOUT UTILITIES
+========================================================= */
+
+/* Container */
 .ds-container {
   width: 100%;
   max-width: 1400px;
@@ -258,6 +262,7 @@ body{
   padding-inline: var(--gutter);
 }
 
+/* Grid base */
 .ds-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -265,6 +270,7 @@ body{
   width: 100%;
 }
 
+/* Grid variants (desktop) */
 @media (min-width: 820px) {
   .ds-grid--2-cols {
     grid-template-columns: 1fr 1fr;
@@ -285,10 +291,21 @@ body{
   }
 }
 
-/* --- SYSTEM: STACK (vertical rhythm for text) --- */
+/* Grid gap utility (mobile-first) */
+.ds-grid--gap-112{ gap: var(--space-6); } /* móvil */
+@media (min-width: 820px){
+  .ds-grid--gap-112{ gap: 112px; }
+}
+
+.ds-split{
+  display: grid;
+  width: 100%;
+}
+
+/* Stack base */
 .ds-stack{
   display: grid;
-  gap: var(--stack-gap, var(--space-4)); /* 24px por defecto */
+  gap: var(--stack-gap, var(--space-4));
 }
 
 .ds-stack--tight{
@@ -298,129 +315,80 @@ body{
 .ds-stack--loose{
   --stack-gap: var(--space-6); /* 48px */
 }
-/* --- SYSTEM: BACKGROUNDS --- */
+
+/* Stack variants (specific rhythms) */
+.ds-stack--hero{
+  display: grid;
+}
+.ds-stack--hero > *{ margin: 0; }
+.ds-stack--hero > * + *{ margin-top: 40px; }
+.ds-stack--hero > *:nth-child(2){ margin-top: 16px; }
+
+.ds-stack--dilema > *{ margin: 0; }
+.ds-stack--dilema > * + *{ margin-top: 56px; }
+.ds-stack--dilema > *:nth-child(2){ margin-top: 64px; }
+
+.ds-stack--card > *{ margin: 0; }
+.ds-stack--card > * + *{ margin-top: 24px; } 
+
+.ds-measure--hero{
+  max-width: 1200px;  
+}
+
+/* --- SYSTEM: VERTICAL CENTER (for a column content) --- */
+.ds-vcenter{
+  display: grid;
+  align-content: center; 
+}
+
+.ds-col-bottom{
+  display: grid;
+  align-content: end;
+  min-height: 100%;
+}
+
+.ds-slide-pad-reset{
+  padding: 0;                 
+  align-items: stretch;       
+  justify-content: stretch;  
+}
+
+.ds-w-full{ width: 100%; }
+.ds-h-full{ height: 100%; }
+.ds-minh-screen{
+  min-height: 100vh; 
+}
+
+.ds-pad-280{ padding-inline: var(--gutter); }
+.ds-pad-112{ padding-block: var(--space-6); }
+
+.ds-pad-x-136{ padding-inline: var(--gutter); }
+.ds-pad-x-112{ padding-inline: var(--gutter); }
+.ds-pad-y-136{ padding-block: var(--space-6); } 
+
+.ds-pad-b-96{ padding-bottom: var(--space-6); }
+.ds-pad-r-1312{ padding-right: 0; }
+
+.ds-pad-bottom-safe{
+  padding-bottom: clamp(24px, 6vh, 96px);
+  padding-bottom: calc(clamp(24px, 6vh, 96px) + env(safe-area-inset-bottom));
+}
+
+/* =========================================================
+   6. DESIGN SYSTEM – BACKGROUNDS
+========================================================= */
+
+/* Backgorund image utility */
 .ds-bg-cover{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
-.ds-bg-fondoux{
-  background-image: url("./assets/experience_3lastic.png");
-}
-/* --- SYSTEM: HERO LAYOUT --- */
-
-/* Columna de texto del hero (controla el “280” exterior al centrar) */
-.ds-measure--hero{
-  max-width: 1200px;   /* ajusta si tu Figma pide otro ancho */
-}
-
-/* Stack del hero con gaps exactos por pares */
-.ds-stack--hero{
-  display: grid;
-}
-
-/* Resetea márgenes para que SOLO mande el gap */
-.ds-stack--hero > *{
-  margin: 0;
-}
-
-.ds-stack--hero > * + *{
-  margin-top: 40px;              /* default entre bloques */
-}
-.ds-stack--hero > *:nth-child(2){
-  margin-top: 16px;              /* entre Elastic (1) y Criterio (2) */
-}
-
-/* --- SYSTEM: SECTION PADDING VARIANTS --- */
-.ds-pad-280{
-  padding-inline: 280px;
-}
-.ds-pad-112{
-  padding-block: 112px;
-}
-
-/* --- SYSTEM: STACK (custom gaps by pair) --- */
-/* (si ya tienes ds-stack, esto solo añade una variante concreta) */
-.ds-stack--dilema > *{
-  margin: 0; /* neutraliza márgenes por defecto */
-}
-.ds-stack--dilema > * + *{
-  margin-top: 56px;   /* default: lista -> botón */
-}
-.ds-stack--dilema > *:nth-child(2){
-  margin-top: 64px;   /* título -> lista */
-}
-
-/* --- SYSTEM: BUTTON (inverse outline) --- */
-.ds-btn{
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-4); /* 24px si --space-4=24px; si no, usa 24px fijo */
-  border: 1px solid #fff;
-  color: #fff;
-  text-decoration: none;
-  width: fit-content;
-}
-/* --- SYSTEM: SPLIT (2 columns full-bleed with independent paddings) --- */
-.ds-split{
-  display: grid;
-  width: 100%;
-}
-
-@media (min-width: 820px){
-  .ds-split--2{
-    grid-template-columns: 1fr 1fr;
-    column-gap: 112px;
-    align-items: stretch;
-  }
-}
-
-/* padding por columna */
-.ds-pad-x-136{ padding-inline: 136px; }
-.ds-pad-x-112{ padding-inline: 112px; }
-.ds-pad-y-136{ padding-block: 136px; }
-
-/* --- SYSTEM: VERTICAL CENTER (for a column content) --- */
-.ds-vcenter{
-  display: grid;
-  align-content: center; /* ✅ centra verticalmente dentro de su columna */
-}
-
-/* --- SYSTEM: METRICS --- */
-.ds-metrics{
-  display: grid;
-  justify-items: center;
-}
-
-.ds-metric{
-  display: grid;
-  justify-items: center;
-}
-
-/* reset de márgenes */
-.ds-metric > *{ margin: 0; }
-
-/* ✅ dentro del grupo: número -> descripción = pequeño */
-.ds-metric > * + *{
-  margin-top: 16px; /* pequeño (ajusta a 12/16 si Figma pide otro) */
-}
-
-/* ✅ entre grupos: métrica -> métrica = 72px */
-.ds-metric + .ds-metric{
-  margin-top: 72px;
-}
-/* SYSTEM: MEDIA PANEL (reutilizable) */
-.ds-panel-media{
-  padding: 0;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-/* --- SYSTEM: Background dim overlay (reutilizable) --- */
+/* Dim overlay utility */
 .ds-bg-dim{
   position: relative;
-  isolation: isolate; /* asegura que el overlay quede dentro */
+  isolation: isolate;
 }
 
 .ds-bg-dim::before{
@@ -429,161 +397,48 @@ body{
   inset: 0;
   z-index: 0;
   pointer-events: none;
-
-  /* Oscurece como en Figma (ajusta valores si quieres más/menos) */
   background: radial-gradient(
       70% 60% at 30% 65%,
       rgba(0,0,0,.7)
     );
 }
 
-/* Asegura que el contenido quede por encima */
 .ds-bg-dim > *{
   position: relative;
   z-index: 1;
 }
 
-/* --- SYSTEM: Solid backgrounds --- */
+/* Solid background */
 .ds-bg-black{
-  background: #000; /* o var(--zinc-900) si quieres el negro del sistema */
+  background: var(--zinc-900);
 }
 
+/* Image backgrounds */
 .ds-bg-fondocolumna{
   background-image: url("./assets/experience.png");
 }
-
 .ds-bg-fondolayer{
   background-image: url("./assets/fondolayer.png");
 }
-
 .ds-bg-fondohotel{
   background-image: url("./assets/fondohotel.png");
 }
-
 .ds-bg-fondowallet{
   background-image: url("./assets/fondowallet.png");
 }
-
 .ds-bg-fondobarco{
   background-image: url("./assets/fondobarco.png");
 }
-
 .ds-bg-gooddecision{
   background-image: url("./assets/goood-decision.png");
 }
-
-
-/* --- SYSTEM: GRID GAPS --- */
-.ds-grid--gap-112{ gap: 112px; }
-
-/* --- SYSTEM: COLUMN BOTTOM CONTENT --- */
-.ds-col-bottom{
-  display: grid;
-  align-content: end;   /* ✅ pega el bloque abajo */
-  min-height: 100%;
+.ds-bg-fondoux{
+  background-image: url("./assets/experience_3lastic.png");
 }
-
-/* --- SYSTEM: STACK for card text (fixed rhythm) --- */
-.ds-stack--card > *{ margin: 0; }
-.ds-stack--card > * + *{ margin-top: 24px; }  
-
 
 /* =========================================================
-   RESPONSIVE FIXES (mobile-first) — paddings & layouts
-   Pegar en /public/styles.css
+   7. COMPONENTES
 ========================================================= */
-
-/* 1) Slide reset: que realmente pueda ocupar toda la altura/ancho */
-.ds-slide-pad-reset{
-  padding: 0;                 /* quita padding legacy del .slide */
-  align-items: stretch;       /* ya lo tenías */
-  justify-content: stretch;   /* ya lo tenías */
-}
-
-/* Helpers reales (sin inline styles) */
-.ds-w-full{ width: 100%; }
-.ds-h-full{ height: 100%; }
-/* Alto correcto en mobile (Safari/Chrome) */
-.ds-minh-screen{
-  min-height: 100vh; /* dynamic viewport height (mejor cuando cambia la barra) */
-}
-
-/* 2) PADDINGS: mobile-first (en móvil NO pueden ser 136/280/1312) */
-.ds-pad-280{ padding-inline: var(--gutter); }
-.ds-pad-112{ padding-block: var(--space-6); } /* 48px en móvil */
-
-.ds-pad-x-136{ padding-inline: var(--gutter); }
-.ds-pad-x-112{ padding-inline: var(--gutter); }
-.ds-pad-y-136{ padding-block: var(--space-6); } /* 48px móvil */
-
-.ds-pad-b-96{ padding-bottom: var(--space-6); } /* 48px móvil */
-
-/* Mobile: si el grid es “3-left” pero solo usas la 1ra columna,
-   oculta los placeholders para que no generen filas/gaps */
-@media (max-width: 819px){
-  .ds-grid--3-left > [aria-hidden="true"]{
-    display: none;
-  }
-}
-/* gaps grandes también deben bajar en móvil */
-.ds-grid--gap-112{ gap: var(--space-6); } /* 48px móvil */
-
-@media (min-width: 820px){
-
-  .ds-pad-x-136{ padding-inline: 136px; }
-  .ds-pad-x-112{ padding-inline: 112px; }
-  .ds-pad-y-136{ padding-block: 136px; }
-
-  .ds-pad-b-96{ padding-bottom: 96px; }
-  .ds-grid--gap-112{ gap: 112px; }
-}
-
-/* 3) Slide 6: padding-right 1312 SOLO en desktop grande.
-   En tablet/móvil debe ser 0 (si no, empuja todo y “sube” el contenido). */
-.ds-pad-r-1312{ padding-right: 0; }
-@media (min-width: 1440px){
-  .ds-pad-r-1312{ padding-right: 1312px; }
-}
-
-/* 5) Requisito explícito: .grid-metrics responsive
-   - Mobile: 1 columna
-   - Desktop (>=820): 2 columnas
-*/
-.grid-metrics{
-  display: grid;
-  width: 100%;
-  grid-template-columns: 1fr;     /* mobile */
-}
-
-@media (min-width: 820px){
-  .grid-metrics{
-    grid-template-columns: 1fr 1fr; /* desktop */
-    column-gap: 112px;
-    align-items: stretch;
-  }
-}
-
-/* Left column: centrado vertical (como pediste) */
-.grid-metrics__left{
-  display: grid;
-  align-content: center;
-}
-
-/* Right column: por defecto centrado; ajusta si quieres “start” en móvil */
-.grid-metrics__right{
-  display: grid;
-  align-content: center;
-}
-
-.ds-pad-bottom-safe{
-  padding-bottom: clamp(24px, 6vh, 96px);
-  padding-bottom: calc(clamp(24px, 6vh, 96px) + env(safe-area-inset-bottom));
-}
-
-
-/* --------------------------------
-   Stepper (right side navigation)
--------------------------------- */
 
 /* Stepper */
 .stepper{
@@ -592,8 +447,6 @@ body{
   top: 50%;
   transform: translateY(-50%);
   z-index: 6;
-
-  /* ✅ para que NO compita con clicks del WebGL */
   pointer-events: none;
 }
 
@@ -615,11 +468,11 @@ body{
 }
 
 .stepper__btn{
-  width: 4px;   /* ✅ pedido */
-  height: 4px;  /* ✅ pedido */
+  width: 4px;
+  height: 4px;
   border-radius: 999px;
   border: none;
-  background: #ffffff;
+  background: var(--white);
   opacity: 0.5;
   cursor: default;
   padding: 0;
@@ -627,7 +480,7 @@ body{
 }
 
 .stepper__btn[aria-current="true"]{
-  background: #FF637E; /* ✅ activo */
+  background: var(--rose-400);
   opacity: 1;
   transform: scale(1.3);
 }
@@ -639,6 +492,102 @@ body{
   }
 }
 
+/* Cursor nav */
+.cursor-nav{
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-9999px, -9999px, 0);
+  transition: opacity 160ms ease;
+  will-change: transform, opacity;
+}
+
+.cursor-nav.is-visible{
+  opacity: 1;
+}
+
+.cursor-nav__icon{
+  width: 44px;
+  height: 44px;
+  display: block;
+  opacity: 0.95;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
+}
+
+@media (hover: none){
+  .cursor-nav{ display: none; }
+}
+
+body.cursor-nav-active {
+  cursor: none;
+}
+
+/* Media panel */
+.ds-panel-media{
+  opacity: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Button */
+.ds-btn{
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-4);
+  border: 1px solid var(--white);
+  color: var(--white);
+  text-decoration: none;
+  width: fit-content;
+}
+
+/* Metrics grid */
+.grid-metrics{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr;     /* mobile */
+}
+
+@media (min-width: 820px){
+  .grid-metrics{
+    grid-template-columns: 1fr 1fr; /* desktop */
+    column-gap: 112px;
+    align-items: stretch;
+  }
+}
+
+.grid-metrics__left,
+.grid-metrics__right{
+  display: grid;
+  align-content: center;
+}
+
+/* Metrics blocks */
+.ds-metrics{
+  display: grid;
+  justify-items: center;
+}
+
+.ds-metric{
+  display: grid;
+  justify-items: center;
+}
+
+.ds-metric > *{ margin: 0; }
+.ds-metric > * + *{ margin-top: 16px; }
+.ds-metric + .ds-metric{ margin-top: 72px; }
+
+/* =========================================================
+   8. ANIMACIONES / EFFECTS
+========================================================= */
 
 /* Blur in (on demand) */
 .reveal-blur {
@@ -670,11 +619,6 @@ body{
     animation: none !important;
   }
 }
-
-
-/* --------------------------------
-   Sky highlight reveal
--------------------------------- */
 
 .reveal-sky{
   position: relative;
@@ -729,10 +673,6 @@ body{
   }
 }
 
-/* --------------------------------
-   Focus reveal (human / organic)
--------------------------------- */
-
 .reveal-focus{
   display: inline-block;
   color: var(--green-500, #00C950);
@@ -777,14 +717,12 @@ body{
   }
 }
 
-/* --------------------------------
-   Ink underline (brand link)
--------------------------------- */
+/* Ink underline (brand link) */
 
 .reveal-ink{
   position: relative;
   display: inline-block;
-  color: var(--pink-400, #FB64B6);
+  color: var(--rose-400, #FB64B6);
   text-decoration: none;
   opacity: 0;
 
@@ -843,48 +781,27 @@ body{
   }
 }
 
-/* --------------------------------
-   Cursor navigator (up/down) — Codrops-style
-   (matches HTML: #cursorNav.cursor-nav + #cursorNavIcon.cursor-nav__icon)
--------------------------------- */
+/* =========================================================
+   9. RESPONSIVE
+========================================================= */
 
-.cursor-nav{
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 44px;
-  height: 44px;
-
-  /* Centrar icono alrededor del punto (x,y) que setea JS */
-  margin-left: -22px;
-  margin-top: -22px;
-
-  z-index: 80;
-  pointer-events: none;
-  opacity: 0;
-
-  /* JS escribe translate3d(x,y,0) */
-  transform: translate3d(-9999px, -9999px, 0);
-  transition: opacity 160ms ease;
-  will-change: transform, opacity;
+/* Mobile-only fixes */
+@media (max-width: 819px){
+  .ds-grid--3-left > [aria-hidden="true"]{
+    display: none;
+  }
 }
 
-.cursor-nav.is-visible{
-  opacity: 1;
+/* Desktop */
+@media (min-width: 820px){
+  .ds-split--2{
+    grid-template-columns: 1fr 1fr;
+    column-gap: 112px;
+    align-items: stretch;
+  }
 }
 
-.cursor-nav__icon{
-  width: 44px;
-  height: 44px;
-  display: block;
-  opacity: 0.95;
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.35));
-}
-
-/* En móvil/tablet no hay cursor: lo ocultamos */
-@media (hover: none){
-  .cursor-nav{ display: none; }
-}
-body.cursor-nav-active {
-  cursor: none;
+/* Large desktop */
+@media (min-width: 1440px){
+  .ds-pad-r-1312{ padding-right: 1312px; }
 }
