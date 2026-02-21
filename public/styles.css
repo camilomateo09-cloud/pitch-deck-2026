@@ -338,7 +338,7 @@ body{
 /* --- SYSTEM: VERTICAL CENTER (for a column content) --- */
 .ds-vcenter{
   display: grid;
-  align-content: center; 
+  align-content: center;
 }
 
 .ds-col-bottom{

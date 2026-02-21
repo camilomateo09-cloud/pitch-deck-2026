@@ -1,6 +1,6 @@
 /*
   /public/main.js
-  New Year greeting landing — Elastic Design
+  Elastic Design - Pitch Dech 2026
   Plain JS: personalization, slide enter animations, stepper, snap-assist, keyboard nav, cursor nav.
 */
 
