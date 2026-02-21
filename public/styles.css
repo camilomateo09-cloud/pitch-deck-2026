@@ -8,7 +8,7 @@
 :root{ 
   --zinc-900: #18181B; 
   --white: #FFFFFF; 
-  --rose-400: #FF637E; 
+  --sky-400: oklch(0.746 0.16 232.661);
   --green-500: #00C950; 
   
   --font: "Aleo", ui-serif, Georgia, serif; 
@@ -201,7 +201,6 @@ body{
   font-weight: 600;
   line-height: 100%;
   letter-spacing: 3.84px;
-  /* Escala fluida: mín 64px, ideal 10vw, máx 128px */
   font-size: clamp(64px, 10vw, 128px); 
 }
 
@@ -480,7 +479,7 @@ body{
 }
 
 .stepper__btn[aria-current="true"]{
-  background: var(--rose-400);
+  background: var(--sky-400);
   opacity: 1;
   transform: scale(1.3);
 }
@@ -547,6 +546,34 @@ body.cursor-nav-active {
   color: var(--white);
   text-decoration: none;
   width: fit-content;
+}
+
+.ds-btn{
+  background: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.ds-btn:hover{
+  background-color: var(--sky-400);
+}
+
+.ds-contact-links{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  gap: 8px;
+  margin-top: 16px;
+  text-align: left;
+}
+
+.ds-link{
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.ds-link:hover{
+  color: var(--sky-400);
 }
 
 /* Metrics grid */
@@ -722,7 +749,7 @@ body.cursor-nav-active {
 .reveal-ink{
   position: relative;
   display: inline-block;
-  color: var(--rose-400, #FB64B6);
+  color: var(--sky-400, #00BCFF);
   text-decoration: none;
   opacity: 0;
 
